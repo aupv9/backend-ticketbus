@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -13,7 +14,7 @@ import java.util.List;
 public class XeCanFind implements Serializable {
 
     private int idXe;
-    private List<Ghe> danhsachghe;
+    private Set<Ghe> danhsachghe;
     private int idNhaXe;
     private String tenNhaXe;
     private int idLoaiXe;

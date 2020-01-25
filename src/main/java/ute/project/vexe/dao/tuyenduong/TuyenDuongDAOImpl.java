@@ -22,7 +22,7 @@ public class TuyenDuongDAOImpl extends JdbcDaoSupport
     @Override
     public List<TuyenDuong> findAll() {
         try {
-            return this.getJdbcTemplate().query("SELECT * FROM tuyenduong",
+            return this.getJdbcTemplate().query("SELECT * FROM fnc_findall_tuyenduong()",
                     (resultSet, i) -> new TuyenDuong(resultSet.getInt(1),
                                             resultSet.getString(4),
                                             resultSet.getString(3),
@@ -38,7 +38,7 @@ public class TuyenDuongDAOImpl extends JdbcDaoSupport
     @Override
     public TuyenDuong findById(int id) {
         try {
-            return this.getJdbcTemplate().queryForObject("SELECT * FROM tuyenduong WHERE id = ?",
+            return this.getJdbcTemplate().queryForObject("SELECT * FROM fnc_findtuyenduongbyid(?)",
                     new Object[]{id},
                     (resultSet, i) -> new  TuyenDuong(resultSet.getInt(1),
                                                     resultSet.getString(2),
@@ -55,7 +55,7 @@ public class TuyenDuongDAOImpl extends JdbcDaoSupport
     @Override
     public boolean insert(TuyenDuong tuyenDuong) {
         try {
-            return this.getJdbcTemplate().update("INSERT INTO tuyenduong VALUES (default ,?,?,?,default )",
+            return this.getJdbcTemplate().update("CALL sp_insert_tuyenduong( ?,?,? )",
                     tuyenDuong.getDate(),tuyenDuong.getNoiden(),tuyenDuong.getNoidi()) != 0 ;
         }catch (Exception ex){
             ex.printStackTrace();
@@ -67,7 +67,7 @@ public class TuyenDuongDAOImpl extends JdbcDaoSupport
     public boolean update(TuyenDuong tuyenDuong) {
         try {
             return this.getJdbcTemplate()
-                    .update("UPDATE tuyenduong SET date = ?, noiden = ?, noidi = ?,deleted = ? WHERE id =?",
+                    .update("CALL sp_update_tuyenduong(?,?,?,?)",
                             tuyenDuong.getDate(),tuyenDuong.getNoiden(),
                             tuyenDuong.getNoidi(),tuyenDuong.isDeleted()
                             ,tuyenDuong.getId()) != 0;
@@ -81,8 +81,8 @@ public class TuyenDuongDAOImpl extends JdbcDaoSupport
     public boolean delete(int id) {
         try {
             return this.getJdbcTemplate()
-                    .update("UPDATE tuyenduong SET deleted= ? WHERE id = ?",
-                    true, id) != 0;
+                    .update("CALL sp_delete_tuyenduong(?)",
+                     id) != 0;
         }catch (Exception ex){
             ex.printStackTrace();
             return false;

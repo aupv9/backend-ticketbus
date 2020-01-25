@@ -3,14 +3,12 @@ package ute.project.vexe.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ute.project.vexe.model.NhaXe;
 import ute.project.vexe.model.Xe;
 import ute.project.vexe.model.XeCanFind;
 import ute.project.vexe.service.xe.XeServiceImpl;
-
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -46,8 +44,10 @@ public class XeController {
                 : new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping(value = "/car",produces = "application/json")
-    public ResponseEntity<Boolean> insertHouseCar(@RequestBody Xe xe){
+    @PostMapping(value = "/car",produces = "application/json",
+            consumes = {MediaType.ALL_VALUE})
+    public ResponseEntity<Boolean> insertCar(@RequestBody Xe xe){
+        System.out.println(xe);
         return this.xeService.insert(xe) ? new ResponseEntity<>(true, HttpStatus.CREATED)
                 :  new ResponseEntity<>(false,HttpStatus.NOT_MODIFIED);
     }
@@ -63,4 +63,11 @@ public class XeController {
         return this.xeService.delete(id) ? new ResponseEntity<>(true, HttpStatus.OK)
                 :  new ResponseEntity<>(false,HttpStatus.NOT_MODIFIED);
     }
+
+    @PostMapping(value = "/update-car",produces = "application/json")
+    public ResponseEntity<Boolean> updateSeats(@org.jetbrains.annotations.NotNull @RequestBody Xe xe){
+        return this.xeService.updateGhe(xe.getId(),xe.getIdGhe()) ? new ResponseEntity<>(true, HttpStatus.OK)
+                :  new ResponseEntity<>(false,HttpStatus.NOT_MODIFIED);
+    }
+
 }

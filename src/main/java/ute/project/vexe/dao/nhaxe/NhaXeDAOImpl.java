@@ -20,7 +20,7 @@ public class NhaXeDAOImpl extends JdbcDaoSupport
     @Override
     public List<NhaXe> findAll() {
         try {
-            return this.getJdbcTemplate().query("SELECT * FROM findallnhaxe()",
+            return this.getJdbcTemplate().query("SELECT * FROM fnc_findallnhaxe()",
                     (resultSet, i) -> new NhaXe(resultSet.getInt(1),resultSet.getString(2),resultSet.getBoolean(3))
                     );
         }catch (Exception ex){

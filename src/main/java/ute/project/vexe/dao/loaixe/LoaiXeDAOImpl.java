@@ -21,7 +21,7 @@ public class LoaiXeDAOImpl extends JdbcDaoSupport implements LoaiXeDAOImplement 
     @Override
     public List<LoaiXe> findAll() {
         try {
-            return this.getJdbcTemplate().query("SELECT * FROM loaixe",
+            return this.getJdbcTemplate().query("SELECT * FROM fnc_findall_loaixe()",
                     (resultSet, i) -> new LoaiXe(resultSet.getInt(1),resultSet.getInt(2),resultSet.getString(3),resultSet.getBoolean(4)));
         }catch (Exception ex){
             ex.printStackTrace();
@@ -32,7 +32,7 @@ public class LoaiXeDAOImpl extends JdbcDaoSupport implements LoaiXeDAOImplement 
     @Override
     public LoaiXe findById(int id) {
         try {
-            return this.getJdbcTemplate().queryForObject("SELECT * FROM loaixe WHERE id = ?",
+            return this.getJdbcTemplate().queryForObject("SELECT * FROM fnc_findbyidloaixe(?)",
                     new Object[]{id},
                     (resultSet,i) -> new LoaiXe(resultSet.getInt(1),resultSet.getInt(2),resultSet.getString(3),resultSet.getBoolean(4)));
         }catch (Exception ex){
@@ -44,7 +44,7 @@ public class LoaiXeDAOImpl extends JdbcDaoSupport implements LoaiXeDAOImplement 
     @Override
     public boolean insert(LoaiXe loaiXe) {
         try {
-            this.getJdbcTemplate().update("INSERT INTO loaixe VALUES (default ,?,?,default )",
+            this.getJdbcTemplate().update("CALL sp_insert_loaixe( ?,? )",
                     new Object[]{loaiXe.getKieu(),loaiXe.getTen()});
             return true;
         }catch (Exception ex){
@@ -56,8 +56,8 @@ public class LoaiXeDAOImpl extends JdbcDaoSupport implements LoaiXeDAOImplement 
     @Override
     public boolean update(LoaiXe loaiXe) {
         try {
-            this.getJdbcTemplate().update("UPDATE loaixe SET kieu = ?, ten = ?, deleted = ? WHERE id = ?",
-                    new Object[]{loaiXe.getKieu(),loaiXe.getTen(),loaiXe.isDeleted(),loaiXe.getId()});
+            this.getJdbcTemplate().update("CALL sp_update_loaixe(?,?,?,?)",
+                    loaiXe.getKieu(),loaiXe.getTen(),loaiXe.isDeleted(),loaiXe.getId());
             return true;
         }catch (Exception ex){
             ex.printStackTrace();
@@ -68,8 +68,8 @@ public class LoaiXeDAOImpl extends JdbcDaoSupport implements LoaiXeDAOImplement 
     @Override
     public boolean delete(int id) {
         try {
-            this.getJdbcTemplate().update("UPDATE loaixe SET deleted = ? WHERE id = ?",
-                                        new Object[]{true,id});
+            this.getJdbcTemplate().update("CALL sp_delete_loaixe(?)",
+                                        new Object[]{id});
             return true;
         }catch (Exception ex){
             ex.printStackTrace();

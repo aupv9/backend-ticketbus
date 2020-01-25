@@ -3,11 +3,13 @@ package ute.project.vexe.service.xe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ute.project.vexe.dao.xe.XeDAOImpl;
+import ute.project.vexe.model.Ghe;
 import ute.project.vexe.model.Xe;
 import ute.project.vexe.model.XeCanFind;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class XeServiceImpl implements XeServiceImplement {
@@ -48,5 +50,12 @@ public class XeServiceImpl implements XeServiceImplement {
     @Override
     public boolean delete(int id) {
         return this.xeDAO.delete(id);
+    }
+
+
+
+    @Override
+    public boolean updateGhe(int idXe, Set<Integer> idGhes) {
+        return this.xeDAO.updateGhe(idXe,idGhes);
     }
 }
