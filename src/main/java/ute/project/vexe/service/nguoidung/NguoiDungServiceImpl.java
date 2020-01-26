@@ -10,6 +10,7 @@ import java.util.List;
 @Service
 public class NguoiDungServiceImpl implements  NguoiDungServiceImplement {
 
+
     private NguoiDungDAOImpl nguoiDungDAO;
 
     @Autowired
@@ -40,5 +41,15 @@ public class NguoiDungServiceImpl implements  NguoiDungServiceImplement {
     @Override
     public boolean delete(int id) {
         return this.nguoiDungDAO.delete(id);
+    }
+
+    @Override
+    public NguoiDung loadUserByUsername(String username) {
+        return this.nguoiDungDAO.loadUserByUsername(username);
+    }
+
+    @Override
+    public boolean checkLogin(NguoiDung user) {
+        return this.nguoiDungDAO.checkLogin(user);
     }
 }

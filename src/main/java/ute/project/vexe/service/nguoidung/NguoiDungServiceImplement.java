@@ -10,5 +10,6 @@ public interface NguoiDungServiceImplement {
     boolean insert(NguoiDung nguoiDung);
     boolean update(NguoiDung nguoiDung);
     boolean delete(int id);
-
+    NguoiDung loadUserByUsername(String username);
+    boolean checkLogin(NguoiDung user);
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(value = {"authorities"})
+@JsonIgnoreProperties(value = {""})
 public class NguoiDung {
 
     private int id;

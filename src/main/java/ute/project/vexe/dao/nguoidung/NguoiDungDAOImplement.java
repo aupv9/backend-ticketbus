@@ -10,4 +10,6 @@ public interface NguoiDungDAOImplement {
     boolean insert(NguoiDung nguoiDung);
     boolean update(NguoiDung nguoiDung);
     boolean delete(int id);
+    NguoiDung loadUserByUsername(String user);
+    boolean checkLogin(NguoiDung user);
 }
