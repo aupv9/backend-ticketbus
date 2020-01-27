@@ -1,5 +1,6 @@
 package ute.project.vexe.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -42,14 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(@NotNull HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.antMatcher("/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/login").permitAll();
-        http.authorizeRequests()
-                        .antMatchers(HttpMethod.GET, "/users").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')");
-
+        http.authorizeRequests().antMatchers("/r*","type*","/house*","/route*","/car*","/user*").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/login","/car-list/by-value").permitAll();
         /*
          * add filter thỏa điều kiện rồi mới vào Controller
          *

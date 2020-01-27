@@ -53,7 +53,7 @@ public class XeDAOImpl extends JdbcDaoSupport implements XeDAOImplement {
     public Xe findById(int id) {
         try {
             assert this.getJdbcTemplate() != null;
-            return this.getJdbcTemplate().queryForObject("SELECT * FROM xe WHERE id = ?",
+            return this.getJdbcTemplate().queryForObject("SELECT * FROM fnc_findxebyid(?)",
                     new Object[]{id},
                     (resultSet, index) -> {
                         return new Xe(resultSet.getInt("id"),
@@ -110,8 +110,8 @@ public class XeDAOImpl extends JdbcDaoSupport implements XeDAOImplement {
         @Override
     public boolean insert(Xe xe) {
         try {
-            return this.getJdbcTemplate().update("CALL insert_xe(?,?,?)",
-                    new Object[]{xe.getLoaixe_id(),xe.getNhaxe_id(),xe.getDanhsachghe().toString()}) >=0;
+            return this.getJdbcTemplate().update("CALL sp_insert_xe(?,?,?)",
+                    xe.getLoaixe_id(),xe.getNhaxe_id(),xe.getDanhsachghe().toString()) >=0;
 
         }catch (Exception ex){
             ex.printStackTrace();
@@ -121,11 +121,24 @@ public class XeDAOImpl extends JdbcDaoSupport implements XeDAOImplement {
 
     @Override
     public boolean update(Xe xe) {
+        try {
+            return this.getJdbcTemplate().update("CALL sp_update_xe(?,?,?,?,?)",
+                    xe.getId(),xe.getLoaixe_id(),xe.getNhaxe_id(),xe.getDanhsachghe(),
+                    xe.isDeleted()) >= 0;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         return false;
     }
 
     @Override
     public boolean delete(int id) {
+        try {
+            return this.getJdbcTemplate().update("CALL sp_delete_xe(?)",
+                    id) >= 0;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         return false;
     }
 

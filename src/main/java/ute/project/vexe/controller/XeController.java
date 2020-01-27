@@ -47,7 +47,6 @@ public class XeController {
     @PostMapping(value = "/car",produces = "application/json",
             consumes = {MediaType.ALL_VALUE})
     public ResponseEntity<Boolean> insertCar(@RequestBody Xe xe){
-        System.out.println(xe);
         return this.xeService.insert(xe) ? new ResponseEntity<>(true, HttpStatus.CREATED)
                 :  new ResponseEntity<>(false,HttpStatus.NOT_MODIFIED);
     }
