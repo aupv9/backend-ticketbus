@@ -19,6 +19,7 @@ public class XeDAOImpl extends JdbcDaoSupport implements XeDAOImplement {
     public XeDAOImpl(DataSource dataSource) {
         this.setDataSource(dataSource);
     }
+
     @Override
     public Set<Ghe> convertStringtoSet(String input) {
         JSONArray arrGhe=new JSONArray(input);
@@ -31,6 +32,7 @@ public class XeDAOImpl extends JdbcDaoSupport implements XeDAOImplement {
         });
         return gheList;
     }
+
     @Override
     public List<Xe> findAll() {
         try {
@@ -86,9 +88,7 @@ public class XeDAOImpl extends JdbcDaoSupport implements XeDAOImplement {
                         xeCanFind.setNoiden(resultSet.getString("noiden"));
                         xeCanFind.setDate(resultSet.getString("ngaydi"));
                         xeCanFind.setIdTuyenDuongDetail(resultSet.getInt("idTDDT"));
-
                         Set<Ghe> gheList=convertStringtoSet(resultSet.getString("danhsachghe"));
-
                         JSONArray jsonObjectarr=new JSONArray(resultSet.getString("lchtrinh"));
                         List<LichTrinh> lichTrinhs=new ArrayList<>();
                         jsonObjectarr.forEach(o -> {
@@ -107,7 +107,8 @@ public class XeDAOImpl extends JdbcDaoSupport implements XeDAOImplement {
         }
         return null;
     }
-        @Override
+
+    @Override
     public boolean insert(Xe xe) {
         try {
             return this.getJdbcTemplate().update("CALL sp_insert_xe(?,?,?)",
@@ -158,8 +159,6 @@ public class XeDAOImpl extends JdbcDaoSupport implements XeDAOImplement {
             ex.printStackTrace();
             return false;
         }
-
     }
-
 
 }

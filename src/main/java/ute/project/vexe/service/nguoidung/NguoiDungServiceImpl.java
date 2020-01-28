@@ -49,7 +49,7 @@ public class NguoiDungServiceImpl implements  NguoiDungServiceImplement {
     }
 
     @Override
-    public boolean checkLogin(NguoiDung user) {
+    public NguoiDung checkLogin(NguoiDung user) {
         return this.nguoiDungDAO.checkLogin(user);
     }
 }

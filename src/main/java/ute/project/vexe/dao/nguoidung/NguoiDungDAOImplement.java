@@ -11,5 +11,5 @@ public interface NguoiDungDAOImplement {
     boolean update(NguoiDung nguoiDung);
     boolean delete(int id);
     NguoiDung loadUserByUsername(String user);
-    boolean checkLogin(NguoiDung user);
+    NguoiDung checkLogin(NguoiDung user);
 }

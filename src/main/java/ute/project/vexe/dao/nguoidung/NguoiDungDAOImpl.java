@@ -107,9 +107,9 @@ public class NguoiDungDAOImpl extends JdbcDaoSupport implements NguoiDungDAOImpl
     }
 
     @Override
-    public boolean checkLogin(NguoiDung user) {
+    public NguoiDung checkLogin(NguoiDung user) {
         try {
-             this.getJdbcTemplate()
+            return this.getJdbcTemplate()
                     .queryForObject("SELECT * FROM  fnc_findnguoidungbyaccount(?,?)",
                     new Object[]{user.getTaikhoan(),user.getMatkhau()},
                             (resultSet, i) -> new NguoiDung(resultSet.getInt(1),
@@ -117,10 +117,9 @@ public class NguoiDungDAOImpl extends JdbcDaoSupport implements NguoiDungDAOImpl
                                     resultSet.getString(4),
                                     resultSet.getString(5),resultSet.getBoolean(6)
                             ,Arrays.asList(resultSet.getString(7).split(","))));
-             return true;
         }catch (Exception e){
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 }

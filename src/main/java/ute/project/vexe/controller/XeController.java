@@ -58,7 +58,7 @@ public class XeController {
     }
 
     @DeleteMapping(value = "/car/{id}",produces = "application/json")
-    public ResponseEntity<Boolean> updateHouseCar(@PathVariable("id") int id){
+    public ResponseEntity<Boolean> deleteHouseCar(@PathVariable("id") int id){
         return this.xeService.delete(id) ? new ResponseEntity<>(true, HttpStatus.OK)
                 :  new ResponseEntity<>(false,HttpStatus.NOT_MODIFIED);
     }
